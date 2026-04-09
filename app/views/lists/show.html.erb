@@ -1,0 +1,15 @@
+<h1><%= @list.name %></h1>
+<%= render "bookmarks/form", bookmark: Bookmark.new, list: @list %>
+<% @list.bookmarks.each do |bookmark| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title"><%= bookmark.movie.title %></h5>
+      <p class="card-text"><%= bookmark.comment %></p>
+    <%= button_to "Delete",
+              bookmark_path(bookmark),
+              method: :delete,
+              data: { turbo_confirm: "Are you sure?" },
+              class: "btn btn-danger" %>
+    </div>
+  </div>
+<% end %>

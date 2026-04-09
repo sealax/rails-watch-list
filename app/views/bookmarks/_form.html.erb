@@ -1,0 +1,15 @@
+<% if @list %>
+  <%= simple_form_for [@list, @bookmark] do |f| %>
+    <div class="mb-3">
+      <%= f.input :comment %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.input :movie_id, collection: Movie.all, prompt: "Choose a movie" %>
+    </div>
+
+    <%= f.submit "Add Bookmark", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <p class="text-muted">Please create a list first to add bookmarks.</p>
+<% end %>
