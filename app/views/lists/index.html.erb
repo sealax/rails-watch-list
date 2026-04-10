@@ -1,12 +1,27 @@
-<h1>These are the Lists</h1>
-
-<% @lists.each do |list| %>
-  <div class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title"><%= link_to list.name, list_path(list) %></h5>
-      <p class="card-text"><%= list.bookmarks.count %> bookmark(s)</p>
-    </div>
+<div class="banner text-white mb-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba');">
+  <div class="text-center">
+    <h1>Save any kind of movies</h1>
+    <p>Classic</p>
   </div>
-<% end %>
+</div>
 
-<%= link_to "Create New List", new_list_path, class: "btn btn-primary" %>
+<div class="container mt-5">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>My Lists</h1>
+    <%= link_to "Create New List", new_list_path, class: "btn btn-success" %>
+  </div>
+
+  <div class="row">
+    <% @lists.each do |list| %>
+      <div class="col-md-4">
+        <%= link_to list_path(list), class: "text-decoration-none" do %>
+          <div class="list-card mb-4" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1485846234645-a62644f84728');">
+            <%= list.name %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
