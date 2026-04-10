@@ -15,11 +15,23 @@
   <div class="row">
     <% @lists.each do |list| %>
       <div class="col-md-4">
-        <%= link_to list_path(list), class: "text-decoration-none" do %>
-          <div class="list-card mb-4" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1485846234645-a62644f84728');">
-            <%= list.name %>
-          </div>
-        <% end %>
+        <div class="position-relative">
+
+          <%= link_to list_path(list), class: "text-decoration-none" do %>
+            <div class="list-card mb-4"
+              style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+              url('<%= list.photo.attached? ? url_for(list.photo) : "https://images.unsplash.com/photo-1485846234645-a62644f84728" %>');">
+              <%= list.name %>
+            </div>
+          <% end %>
+
+          <%= button_to "✕",
+            list_path(list),
+            method: :delete,
+            data: { turbo_confirm: "Delete this list?" },
+            class: "btn btn-danger btn-sm position-absolute top-0 end-0 m-2" %>
+
+        </div>
       </div>
     <% end %>
   </div>

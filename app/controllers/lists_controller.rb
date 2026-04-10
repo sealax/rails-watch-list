@@ -18,13 +18,19 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to @list, notice: "List was successfully created."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
-private
+  def destroy
+    @list = List.find(params[:id])
+    @list.destroy
+    redirect_to lists_path, notice: "List was successfully deleted."
+  end
 
-def list_params
-  params.require(:list).permit(:name)
-end
+  private
+
+  def list_params
+    params.require(:list).permit(:name, :photo)
+  end
 end

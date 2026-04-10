@@ -5,6 +5,12 @@
     <%= link_to "Back to Lists", lists_path, class: "btn btn-secondary" %>
   </div>
 
+  <% if @list.photo.attached? %>
+    <div class="mb-4">
+      <%= image_tag @list.photo, class: "img-fluid rounded mb-4", style: "max-height: 300px; width: 100%; object-fit: cover;" %>
+    </div>
+  <% end %>
+
   <div class="mb-4">
     <%= render "bookmarks/form", bookmark: Bookmark.new, list: @list %>
   </div>
