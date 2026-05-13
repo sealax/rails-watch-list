@@ -24,6 +24,36 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="app-navbar">
+      <div class="container app-navbar__inner">
+        <%= link_to root_path, class: "app-navbar__brand" do %>
+          <span class="app-navbar__mark"><i class="fa-solid fa-clapperboard"></i></span>
+          <span>Watch List</span>
+        <% end %>
+
+        <div class="app-navbar__actions">
+          <%= link_to "My Lists", lists_path, class: "app-navbar__link" %>
+          <%= link_to new_list_path, class: "btn btn-primary btn-sm" do %>
+            <i class="fa-solid fa-plus"></i>
+            <span>New List</span>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <% if notice.present? || alert.present? %>
+      <div class="flash-wrap container">
+        <% if notice.present? %>
+          <div class="alert alert-success app-alert" role="alert"><%= notice %></div>
+        <% end %>
+        <% if alert.present? %>
+          <div class="alert alert-danger app-alert" role="alert"><%= alert %></div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <main class="app-shell">
+      <%= yield %>
+    </main>
   </body>
 </html>

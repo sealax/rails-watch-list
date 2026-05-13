@@ -1,41 +1,71 @@
-<div class="container mt-5">
+<section class="list-hero" style="--list-image: url('<%= @list.photo.attached? ? url_for(@list.photo) : "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba" %>');">
+  <div class="container list-hero__content">
+    <%= link_to lists_path, class: "back-link" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>All lists</span>
+    <% end %>
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><%= @list.name %></h1>
-    <%= link_to "Back to Lists", lists_path, class: "btn btn-secondary" %>
-  </div>
-
-  <% if @list.photo.attached? %>
-    <div class="mb-4">
-      <%= image_tag @list.photo, class: "img-fluid rounded mb-4", style: "max-height: 300px; width: 100%; object-fit: cover;" %>
+    <div>
+      <p class="eyebrow">Watch list</p>
+      <h1><%= @list.name %></h1>
+      <p><%= pluralize(@bookmarks.count, "movie") %> saved</p>
     </div>
-  <% end %>
-
-  <div class="mb-4">
-    <%= render "bookmarks/form", bookmark: @bookmark, list: @list %>
   </div>
+</section>
 
-  <div class="row">
-    <% @bookmarks.each do |bookmark| %>
-      <div class="col-md-4">
-        <div class="movie-card mb-4">
+<div class="container content-section">
+  <div class="show-layout">
+    <aside class="form-panel">
+      <div class="form-panel__header">
+        <p class="eyebrow">Add movie</p>
+        <h2>Grow this list</h2>
+      </div>
+      <%= render "bookmarks/form", bookmark: @bookmark, list: @list %>
+    </aside>
 
-          <%= image_tag bookmark.movie.backdrop_url %>
-
-          <div class="card-body">
-            <h5 class="card-title"><%= bookmark.movie.title %></h5>
-            <p class="card-text"><%= bookmark.comment %></p>
-
-            <%= button_to "Delete",
-              bookmark_path(bookmark),
-              method: :delete,
-              data: { turbo_confirm: "Are you sure?" },
-              class: "btn btn-danger btn-sm mt-2" %>
-          </div>
-
+    <section>
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Saved movies</p>
+          <h2>Collection</h2>
         </div>
       </div>
-    <% end %>
-  </div>
 
+      <% if @bookmarks.any? %>
+        <div class="movie-grid">
+          <% @bookmarks.each do |bookmark| %>
+            <article class="movie-card">
+              <%= image_tag bookmark.movie.backdrop_url.presence || bookmark.movie.poster_url, alt: bookmark.movie.title %>
+
+              <div class="movie-card__body">
+                <div>
+                  <div class="movie-card__meta">
+                    <% if bookmark.movie.rating.present? %>
+                      <span><i class="fa-solid fa-star"></i> <%= number_with_precision(bookmark.movie.rating, precision: 1) %></span>
+                    <% end %>
+                  </div>
+                  <h3><%= bookmark.movie.title %></h3>
+                  <p><%= bookmark.comment %></p>
+                </div>
+
+                <%= button_to bookmark_path(bookmark),
+                  method: :delete,
+                  data: { turbo_confirm: "Remove this movie from the list?" },
+                  class: "btn btn-outline-light btn-sm" do %>
+                  <i class="fa-solid fa-trash-can"></i>
+                  <span>Remove</span>
+                <% end %>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state empty-state--compact">
+          <i class="fa-solid fa-ticket"></i>
+          <h3>No movies saved</h3>
+          <p>Choose a movie and add a note to start this collection.</p>
+        </div>
+      <% end %>
+    </section>
+  </div>
 </div>

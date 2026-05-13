@@ -1,9 +1,19 @@
-<h1>Create List</h1>
+<div class="container content-section content-section--narrow">
+  <%= link_to lists_path, class: "back-link back-link--dark" do %>
+    <i class="fa-solid fa-arrow-left"></i>
+    <span>All lists</span>
+  <% end %>
 
-<%= simple_form_for @list do |f| %>
-  <div class="mb-3">
-    <%= f.input :name %>
+  <div class="form-panel form-panel--wide">
+    <div class="form-panel__header">
+      <p class="eyebrow">New collection</p>
+      <h1>Create List</h1>
+    </div>
+
+    <%= simple_form_for @list do |f| %>
+      <%= f.input :name, input_html: { placeholder: "Weekend thrillers" } %>
+      <%= f.input :photo, as: :file %>
+      <%= f.submit "Create List", class: "btn btn-primary" %>
+    <% end %>
   </div>
-  <%= f.input :photo, as: :file %>
-  <%= f.submit "Create List", class: "btn btn-primary" %>
-<% end %>
+</div>

@@ -1,3 +1,15 @@
-<h1>Add a movie to <%= @list.name %></h1>
+<div class="container content-section content-section--narrow">
+  <%= link_to list_path(@list), class: "back-link back-link--dark" do %>
+    <i class="fa-solid fa-arrow-left"></i>
+    <span><%= @list.name %></span>
+  <% end %>
 
-<%= render "form" %>
+  <div class="form-panel form-panel--wide">
+    <div class="form-panel__header">
+      <p class="eyebrow">Add movie</p>
+      <h1><%= @list.name %></h1>
+    </div>
+
+    <%= render "form" %>
+  </div>
+</div>

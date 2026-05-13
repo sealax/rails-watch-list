@@ -1,39 +1,51 @@
-<div class="banner text-white mb-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba');">
-  <div class="text-center">
-    <h1>Save any kind of movies</h1>
-    <p>Classic</p>
-  </div>
-</div>
-
-<div class="container mt-5">
-
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>My Lists</h1>
-    <%= link_to "Create New List", new_list_path, class: "btn btn-success" %>
-  </div>
-
-  <div class="row">
-    <% @lists.each do |list| %>
-      <div class="col-md-4">
-        <div class="position-relative">
-
-          <%= link_to list_path(list), class: "text-decoration-none" do %>
-            <div class="list-card mb-4"
-              style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-              url('<%= list.photo.attached? ? url_for(list.photo) : "https://images.unsplash.com/photo-1485846234645-a62644f84728" %>');">
-              <%= list.name %>
-            </div>
-          <% end %>
-
-          <%= button_to "✕",
-            list_path(list),
-            method: :delete,
-            data: { turbo_confirm: "Delete this list?" },
-            class: "btn btn-danger btn-sm position-absolute top-0 end-0 m-2" %>
-
-        </div>
-      </div>
+<section class="home-hero">
+  <div class="container home-hero__content">
+    <p class="eyebrow">Curated movie nights</p>
+    <h1>Save movies into lists worth coming back to.</h1>
+    <p class="home-hero__copy">Build collections for genres, moods, trips, date nights, or the classics you always recommend.</p>
+    <%= link_to new_list_path, class: "btn btn-primary btn-lg" do %>
+      <i class="fa-solid fa-plus"></i>
+      <span>Create list</span>
     <% end %>
   </div>
+</section>
+
+<div class="container content-section">
+  <div class="section-header">
+    <div>
+      <p class="eyebrow">Library</p>
+      <h2>My Lists</h2>
+    </div>
+    <span class="section-header__meta"><%= pluralize(@lists.count, "list") %></span>
+  </div>
+
+  <% if @lists.any? %>
+    <div class="list-grid">
+    <% @lists.each do |list| %>
+      <div class="list-card-wrap">
+        <%= link_to list_path(list), class: "list-card", style: "--list-image: url('#{list.photo.attached? ? url_for(list.photo) : "https://images.unsplash.com/photo-1485846234645-a62644f84728"}');" do %>
+          <span class="list-card__count"><%= pluralize(list.movies.count, "movie") %></span>
+          <h3><%= list.name %></h3>
+          <span class="list-card__cta">Open list</span>
+        <% end %>
+
+        <%= button_to list_path(list),
+          method: :delete,
+          data: { turbo_confirm: "Delete this list?" },
+          class: "icon-action icon-action--danger",
+          aria: { label: "Delete #{list.name}" } do %>
+          <i class="fa-solid fa-trash-can"></i>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <i class="fa-solid fa-film"></i>
+      <h3>No lists yet</h3>
+      <p>Create your first watch list and start organizing movies by mood, genre, or occasion.</p>
+      <%= link_to "Create a list", new_list_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
 
 </div>
