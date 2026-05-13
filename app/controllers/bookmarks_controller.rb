@@ -2,6 +2,7 @@ class BookmarksController < ApplicationController
   def new
     @list = List.find(params[:list_id])
     @bookmark = Bookmark.new
+    @movies = Movie.order(:title)
   end
 
   def create
@@ -11,6 +12,7 @@ class BookmarksController < ApplicationController
     if @bookmark.save
       redirect_to @list, notice: "Bookmark was successfully created."
     else
+      @movies = Movie.order(:title)
       render :new, status: :unprocessable_entity
     end
   end

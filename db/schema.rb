@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_125812) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_13_162311) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,29 +43,32 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_125812) do
   end
 
   create_table "bookmarks", force: :cascade do |t|
-    t.string "comment"
+    t.string "comment", null: false
     t.datetime "created_at", null: false
     t.bigint "list_id", null: false
     t.bigint "movie_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["list_id", "movie_id"], name: "index_bookmarks_on_list_id_and_movie_id", unique: true
     t.index ["list_id"], name: "index_bookmarks_on_list_id"
     t.index ["movie_id"], name: "index_bookmarks_on_movie_id"
   end
 
   create_table "lists", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "name"
+    t.string "name", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_lists_on_name", unique: true
   end
 
   create_table "movies", force: :cascade do |t|
     t.string "backdrop_url"
     t.datetime "created_at", null: false
-    t.text "overview"
+    t.text "overview", null: false
     t.string "poster_url"
     t.float "rating"
-    t.string "title"
+    t.string "title", null: false
     t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_movies_on_title", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

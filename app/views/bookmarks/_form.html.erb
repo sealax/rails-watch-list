@@ -5,7 +5,7 @@
     </div>
 
     <div class="mb-3">
-      <%= f.input :movie_id, collection: Movie.all, prompt: "Choose a movie" %>
+      <%= f.input :movie_id, collection: @movies, prompt: "Choose a movie" %>
     </div>
 
     <%= f.submit "Add Bookmark", class: "btn btn-primary" %>

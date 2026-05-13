@@ -6,7 +6,8 @@ class ListsController < ApplicationController
   def show
     @list = List.find(params[:id])
     @bookmark = Bookmark.new
-    @bookmarks = @list.bookmarks
+    @bookmarks = @list.bookmarks.includes(:movie)
+    @movies = Movie.order(:title)
   end
 
   def new

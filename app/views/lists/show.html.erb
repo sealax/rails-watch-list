@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="mb-4">
-    <%= render "bookmarks/form", bookmark: Bookmark.new, list: @list %>
+    <%= render "bookmarks/form", bookmark: @bookmark, list: @list %>
   </div>
 
   <div class="row">
-    <% @list.bookmarks.each do |bookmark| %>
+    <% @bookmarks.each do |bookmark| %>
       <div class="col-md-4">
         <div class="movie-card mb-4">
 

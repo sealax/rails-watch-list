@@ -1,24 +1,56 @@
-# README
+# Rails Watch List
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails app for building named movie watch lists. Movies are seeded from TMDb,
+lists can have uploaded photos through Active Storage, and bookmarks connect
+movies to lists with a short comment.
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+- Ruby 3.3.5
+- Rails 8.1.3
+- PostgreSQL
+- A TMDb API read access token for `db:seed`
 
-* System dependencies
+## Setup
 
-* Configuration
+Install dependencies:
 
-* Database creation
+```sh
+bundle install
+```
 
-* Database initialization
+Create and prepare the database:
 
-* How to run the test suite
+```sh
+bin/rails db:prepare
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+To seed movies from TMDb, set `TMDB_API_READ_ACCESS_TOKEN` in your shell or in a
+local `.env` file:
 
-* Deployment instructions
+```sh
+TMDB_API_READ_ACCESS_TOKEN=your_token_here
+bin/rails db:seed
+```
 
-* ...
+Start the app:
+
+```sh
+bin/rails server
+```
+
+The app is available at `http://localhost:3000`.
+
+## Tests And Checks
+
+Run the RSpec suite:
+
+```sh
+bundle exec rspec
+```
+
+Run the full project checks:
+
+```sh
+bin/ci
+```
